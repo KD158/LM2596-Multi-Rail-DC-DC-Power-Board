@@ -1,2 +1,47 @@
-# LM2596-Multi-Rail-DC-DC-Power-Board
-Multi-rail DC-DC power supply board based on LM2596, designed with EasyEDA Pro.
+# LM2596 Multi-Rail DC-DC Power Board
+
+基于 LM2596 系列降压芯片设计的多路 DC-DC 电源板。
+
+本项目使用嘉立创 EDA Pro 完成原理图设计、PCB Layout、器件布局及 3D 结构检查，
+主要用于学习 Buck 型开关电源的器件选型、功率回路布局、输入输出滤波、
+肖特基续流、电源反馈及 PCB 设计方法。
+
+---
+
+## 1. Project Overview
+
+该电源板采用 LM2596 系列 Buck 降压芯片，实现多路直流电源输出。
+
+当前设计包含：
+
+- LM2596 固定 5V 输出支路
+- LM2596 固定 3.3V 输出支路
+- LM2596 可调输出支路
+- 多路电源输出接口
+- 输入电源开关
+- DC 电源输入接口
+- 电源状态指示 LED
+- 输入/输出滤波电容
+- SS54 肖特基续流二极管
+- 多路功率电感
+
+PCB 使用双层板设计，并针对 Buck 开关电源的高 di/dt 回路、
+SW 节点、功率地和反馈路径进行了布局优化。
+
+---
+
+## 2. Hardware Architecture
+
+整体电源结构如下：
+
+```text
+              VIN
+               │
+        ┌──────┼──────┬─────────┐
+        │      │      │         │
+        ▼      ▼      ▼         ▼
+   LM2596   LM2596  LM2596    LM2596
+     5V       3.3V     ...       ADJ
+        │      │      │         │
+        ▼      ▼      ▼         ▼
+       5V     3.3V   Output   VCC-ADJ
